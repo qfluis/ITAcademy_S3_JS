@@ -81,7 +81,7 @@ function buy(id) {
     // 2. Add found product to the cartList array
     if (found == true) {
         cartList.push(product);
-        console.log(cartList);
+        //console.log(cartList);
     }
 }
 
@@ -89,18 +89,57 @@ function buy(id) {
 function cleanCart() {
     // cartList = []      cartList.length = 0
     cartList.splice(0, cartList.length);
-    console.log(cartList);
+    //console.log(cartList);
 }
 
 // Exercise 3
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
+    let importeTotal = 0;
+    for (let i=0; i < cartList.length; i++) {
+        importeTotal += cartList[i].price;
+    }
+    //console.log(cartList);
+    //console.log(importeTotal);
 }
 
 // Exercise 4
 function generateCart() {
     // Using the "cartlist" array that contains all the items in the shopping cart, 
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
+    cart.splice(0, cart.length); // vacia cart
+    let cartItem;
+    for (let i = 0; i < cartList.length; i++) {
+        cartItem = cartList[i];
+        let found = false;   // ¿Crear fuera del for? ¿Aquí está ok?
+        let j = 0;
+        
+        while (found == false && j < cart.length) {
+            if (cartItem.id == cart[j].id) {
+                cart[j].quantity += 1;
+                cart[j].subtotal += cartItem.price;
+                cart[j].subtotalWithDiscount += cartItem.price; // cambiar cuando se implementen promociones.
+                found = true;
+            } 
+            j++;
+        }
+
+        if (found == false) {
+            let cartItemNew = {
+                "id": cartItem.id,
+                "name": cartItem.name,
+                "price": cartItem.price,
+                "type": cartItem.type,
+                "quantity": 1,
+                "subtotal": cartItem.price,
+                "subtotalWithDiscount": cartItem.price // cambiar cuando se implementen promociones
+            };
+                        
+            cart.push(cartItemNew);
+        }        
+    }
+    console.log(cartList);
+    console.log(cart);
 }
 
 // Exercise 5
