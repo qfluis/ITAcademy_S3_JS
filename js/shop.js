@@ -145,6 +145,35 @@ function generateCart() {
 // Exercise 5
 function applyPromotionsCart() {
     // Apply promotions to each item in the array "cart"
+    // array de objetos promocionados
+    let promotions = [
+        {
+            "idProduct": 1,
+            "units": 3,
+            "newPrice": 10
+        },
+        {
+            "idProduct": 3,
+            "units": 10,
+            "newPrice": 3.33333
+        }
+    ];
+    
+    for (let i = 0; i < cart.length; i++){
+        let promocionado = false;
+        let j = 0;
+        while (promocionado == false && j < promotions.length){
+            if (cart[i].id == promotions[j].idProduct && cart[i].quantity >= promotions[j].units){
+                //console.log(cart[i].name + " - Producto promocionado!");
+                cart[i].subtotalWithDiscount = cart[i].quantity * promotions[j].newPrice;
+                
+                promocionado = true;
+            }
+            j++;
+        }
+    }
+    console.log(cartList);
+    console.log(cart);
 }
 
 
