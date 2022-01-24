@@ -1,4 +1,5 @@
 // If you have time, you can move this variable "products" to a json file and load the data in this js. It will look more professional
+// Revisar https://developer.mozilla.org/es/docs/Learn/JavaScript/Objects/JSON
 var products = [
     {
         id: 1,
@@ -66,12 +67,29 @@ var total = 0;
 // Exercise 1
 function buy(id) {
     // 1. Loop for to the array products to get the item to add to cart
+    let found = false;
+    let i = 0;
+    let product;
+    while (found == false && i < products.length) {
+        if (products[i].id == id){
+            product = products[i];
+            found = true;            
+        }
+        i++;        
+    }
+        
     // 2. Add found product to the cartList array
+    if (found == true) {
+        cartList.push(product);
+        console.log(cartList);
+    }
 }
 
 // Exercise 2
 function cleanCart() {
-
+    // cartList = []      cartList.length = 0
+    cartList.splice(0, cartList.length);
+    console.log(cartList);
 }
 
 // Exercise 3
