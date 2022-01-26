@@ -176,8 +176,6 @@ function applyPromotionsCart() {
             j++;
         }
     }
-    console.log(cartList);
-    console.log(cart);
 }
 
 
