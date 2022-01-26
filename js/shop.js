@@ -197,6 +197,7 @@ function addToCart(id) {
     }
     // 2. Add found product to the cart array or update its quantity in case it has been added previously.
     
+    
     if (foundProduct == true) {
         let foundProductInCart = false;
         let productInCart;
@@ -204,6 +205,8 @@ function addToCart(id) {
         while (foundProductInCart == false && j < cart.length){
             if(cart[j].id == id){
                 cart[j].quantity++;
+                cart[j].subtotal += cart[j].price;
+                cart[j].subtotalWithDiscount = cart[j].subtotal;
                 foundProductInCart = true;
             }
             j++;
@@ -211,6 +214,8 @@ function addToCart(id) {
 
         if (foundProductInCart == false){
             product.quantity = 1;
+            product.subtotal = product.price;
+            product.subtotalWithDiscount = product.subtotal;
             cart.push(product);
         }
     }
@@ -242,4 +247,15 @@ function removeFromCart(id) {
 // Exercise 9
 function printCart() {
     // Fill the shopping cart modal manipulating the shopping cart dom
+    let contenedor = document.querySelector("#cartModal .modal-body .list");
+    
+    let response = '<table class="table"><tr><th>Product</th><th>Quantity</th><th>unit price</th><th>Subtotal</th></tr>';
+    for (let i = 0; i < cart.length; i++){
+        
+        response += "<tr><td>" + cart[i].name + "</td><td>" + cart[i].quantity + "</td><td>" + cart[i].price +  "</td><td>" + cart[i].subtotal + "</td></tr>";
+        
+    }
+    response += "</table>";
+    response += '<div class="text-center"> Total: ' + calculateTotal() + '</div>';
+    contenedor.outerHTML = response;
 }
