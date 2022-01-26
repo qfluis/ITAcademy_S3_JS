@@ -219,8 +219,24 @@ function addToCart(id) {
 
 // Exercise 8
 function removeFromCart(id) {
-    // 1. Loop for to the array products to get the item to add to cart
-    // 2. Add found product to the cartList array
+    // 1. Loop for to the array cart to get the item to remove
+    let foundProduct = false;
+    let i = 0;
+    let product;
+    while (foundProduct == false && i < cart.length) {
+        if (cart[i].id == id){
+            product = cart[i];
+            if (product.quantity > 1){
+                product.quantity--;
+            } else {
+                cart.splice(i,1);
+            }
+            
+            foundProduct = true;            
+        }
+        i++;        
+    }
+    // console.log(cart);
 }
 
 // Exercise 9
