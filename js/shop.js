@@ -60,7 +60,12 @@ var products = [
 //var cartList = [];
 
 // Improved version of cartList. Cart is an array of products (objects), but each one has a quantity field to define its quantity, so these products are not repeated.
+
 var cart = [];
+if (localStorage.getItem("cart")) {
+    cart = JSON.parse(localStorage.getItem("cart"));
+}
+
 
 var total = 0;
 
@@ -220,6 +225,7 @@ function addToCart(id) {
         }
     }
     console.log(cart);
+    backupCart();
 }
 
 // Exercise 8
@@ -241,21 +247,25 @@ function removeFromCart(id) {
         }
         i++;        
     }
+    backupCart();
     // console.log(cart);
+}
+
+function backupCart(){
+    localStorage.setItem('cart', JSON.stringify(cart));
 }
 
 // Exercise 9
 function printCart() {
     // Fill the shopping cart modal manipulating the shopping cart dom
     let contenedor = document.querySelector("#cartModal .modal-body .list");
-    
-    let response = '<table class="table"><tr><th>Product</th><th>Quantity</th><th>unit price</th><th>Subtotal</th></tr>';
+    let response = '<div class = "list"><table class="table"><tr><th>Product</th><th>Quantity</th><th>unit price</th><th>Subtotal</th></tr>';
     for (let i = 0; i < cart.length; i++){
         
         response += "<tr><td>" + cart[i].name + "</td><td>" + cart[i].quantity + "</td><td>" + cart[i].price +  "</td><td>" + cart[i].subtotal + "</td></tr>";
         
     }
     response += "</table>";
-    response += '<div class="text-center"> Total: ' + calculateTotal() + '</div>';
+    response += '<div class="text-center"> Total: ' + calculateTotal() + '</div></div>';
     contenedor.outerHTML = response;
 }
