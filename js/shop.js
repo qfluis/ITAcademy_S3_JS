@@ -57,7 +57,7 @@ var products = [
     }
 ]
 // Array with products (objects) added directly with push(). Products in this array are repeated.
-var cartList = [];
+//var cartList = [];
 
 // Improved version of cartList. Cart is an array of products (objects), but each one has a quantity field to define its quantity, so these products are not repeated.
 var cart = [];
@@ -65,6 +65,7 @@ var cart = [];
 var total = 0;
 
 // Exercise 1
+/*
 function buy(id) {
     // 1. Loop for to the array products to get the item to add to cart
     let found = false;
@@ -84,11 +85,12 @@ function buy(id) {
         //console.log(cartList);
     }
 }
+*/
 
 // Exercise 2
 function cleanCart() {
     // cartList = []      cartList.length = 0
-    cartList.splice(0, cartList.length);
+    cart.splice(0, cart.length);
     //console.log(cartList);
 }
 
@@ -96,14 +98,15 @@ function cleanCart() {
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
     let importeTotal = 0;
-    for (let i=0; i < cartList.length; i++) {
-        importeTotal += cartList[i].price;
+    for (let i=0; i < cart.length; i++) {
+        importeTotal += (cart[i].price * cart[i].quantity);
     }
-    //console.log(cartList);
-    //console.log(importeTotal);
+    
+    return importeTotal;
 }
 
 // Exercise 4
+/*
 function generateCart() {
     // Using the "cartlist" array that contains all the items in the shopping cart, 
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
@@ -141,6 +144,7 @@ function generateCart() {
     console.log(cartList);
     console.log(cart);
 }
+*/
 
 // Exercise 5
 function applyPromotionsCart() {
@@ -183,7 +187,36 @@ function applyPromotionsCart() {
 function addToCart(id) {
     // Refactor previous code in order to simplify it 
     // 1. Loop for to the array products to get the item to add to cart
+    let foundProduct = false;
+    let i = 0;
+    let product;
+    while (foundProduct == false && i < products.length) {
+        if (products[i].id == id){
+            product = products[i];
+            foundProduct = true;            
+        }
+        i++;        
+    }
     // 2. Add found product to the cart array or update its quantity in case it has been added previously.
+    
+    if (foundProduct == true) {
+        let foundProductInCart = false;
+        let productInCart;
+        let j = 0;
+        while (foundProductInCart == false && j < cart.length){
+            if(cart[j].id == id){
+                cart[j].quantity++;
+                foundProductInCart = true;
+            }
+            j++;
+        }
+
+        if (foundProductInCart == false){
+            product.quantity = 1;
+            cart.push(product);
+        }
+    }
+    console.log(cart);
 }
 
 // Exercise 8
