@@ -14,3 +14,12 @@ input:valid{
 input:invalid {
     border-color: red;
 }
+
+.icons h2 {
+    font-size: 1rem;
+}
+@media (min-width: 992px) { 
+    .icons h2 {
+        font-size: 1.5rem;
+    }
+}

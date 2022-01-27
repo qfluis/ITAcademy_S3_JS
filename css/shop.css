@@ -24,3 +24,13 @@ body{
     right: 0;
     margin-right: 1rem;
 }
+
+.card-img-top {
+    height:160px;
+}
+
+@media (min-width: 992px) { 
+    .marca {        
+        top:9.5rem;
+    }
+}
