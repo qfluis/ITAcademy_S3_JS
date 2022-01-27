@@ -6,3 +6,24 @@ body {
 #errorPassword, #errorName, #errorPhone {
     display: none;
 }
+
+input:valid{
+    border-color: green;
+}
+/*
+input:invalid {
+    border-color: red;
+}*/
+
+.fieldError{
+    border-color: red;
+}
+
+.icons h2 {
+    font-size: 1rem;
+}
+@media (min-width: 992px) { 
+    .icons h2 {
+        font-size: 1.5rem;
+    }
+}
