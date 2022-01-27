@@ -107,7 +107,7 @@ function calculateTotal() {
         importeTotal += (cart[i].price * cart[i].quantity);
     }
     
-    return importeTotal;
+    return importeTotal.toFixed(2);
 }
 
 // Exercise 4
@@ -167,7 +167,8 @@ function applyPromotionsCart() {
             "newPrice": 3.33333
         }
     ];
-    
+
+     
     for (let i = 0; i < cart.length; i++){
         let promocionado = false;
         let j = 0;
@@ -175,10 +176,12 @@ function applyPromotionsCart() {
             if (cart[i].id == promotions[j].idProduct && cart[i].quantity >= promotions[j].units){
                 //console.log(cart[i].name + " - Producto promocionado!");
                 cart[i].subtotalWithDiscount = cart[i].quantity * promotions[j].newPrice;
-                
                 promocionado = true;
-            }
+            } 
             j++;
+        }
+        if (promocionado == false) {
+            cart[i].subtotalWithDiscount = cart[i].quantity * cart[i].price;
         }
     }
 }
@@ -220,7 +223,7 @@ function addToCart(id) {
         if (foundProductInCart == false){
             product.quantity = 1;
             product.subtotal = product.price;
-            product.subtotalWithDiscount = product.subtotal;
+            product.subtotalWithDiscount = 0;
             cart.push(product);
         }
     }
@@ -239,6 +242,8 @@ function removeFromCart(id) {
             product = cart[i];
             if (product.quantity > 1){
                 product.quantity--;
+                product.subtotal -= product.price;
+                product.subtotalWithDiscount = 0;
             } else {
                 cart.splice(i,1);
             }
@@ -257,15 +262,38 @@ function backupCart(){
 
 // Exercise 9
 function printCart() {
+    // Aplicamos promociones
+    let totalWhithDiscount = applyPromotionsCart();
     // Fill the shopping cart modal manipulating the shopping cart dom
     let contenedor = document.querySelector("#cartModal .modal-body .list");
-    let response = '<div class = "list"><table class="table"><tr><th>Product</th><th>Quantity</th><th>unit price</th><th>Subtotal</th></tr>';
+    let response = '<div class = "list"><table class="table"><tr><th>Product</th><th>Quantity</th><th>unit price</th><th>Subtotal</th><th>Subtotal with discount</th><th></th><th></th></tr>';
     for (let i = 0; i < cart.length; i++){
         
-        response += "<tr><td>" + cart[i].name + "</td><td>" + cart[i].quantity + "</td><td>" + cart[i].price +  "</td><td>" + cart[i].subtotal + "</td></tr>";
-        
+        response += "<tr><td>" + cart[i].name + "</td><td>" + cart[i].quantity + "</td><td>" + cart[i].price +  "</td><td>" 
+                        + cart[i].subtotal.toFixed(2) + "</td><td>" + cart[i].subtotalWithDiscount.toFixed(2) + '</td><td><a href="#" onclick="addToCartAndPrint(' + cart[i].id 
+                        + ')">+1</a></td></td><td><a href="#" onclick="removeAndPrintFromCart(' + cart[i].id + ')">-1</a></td></tr>';        
     }
     response += "</table>";
-    response += '<div class="text-center"> Total: ' + calculateTotal() + '</div></div>';
+    response += '<div class="text-center"> Total: ' + calculateTotal() + '</div><div class="text-center"> Total with discount: ' + calculateTotalWithDiscount() + '</div></div>';
     contenedor.outerHTML = response;
+}
+
+function calculateTotalWithDiscount() {
+    // Calculate total price of the cart using the "cartList" array
+    let importeTotal = 0;
+    for (let i=0; i < cart.length; i++) {
+        importeTotal += cart[i].subtotalWithDiscount;
+    }
+    
+    return importeTotal.toFixed(2);
+}
+
+function removeAndPrintFromCart(id) {
+    removeFromCart(id);
+    printCart();
+}
+
+function addToCartAndPrint(id){
+    addToCart(id);
+    printCart();
 }
