@@ -45,18 +45,20 @@ function validate() {
 
         // Comprobar los vacios o <= 3
         if (element.validity.tooShort == true || element.validity.valueMissing == true) {
-            //element.classList.add("fieldError");
+            element.classList.add("fieldError");
             feedback.style.display = "block";
             feedback.innerHTML += "> This field is required (" + tamanoMinimo + " characters min)<br>";
         }    
         // Comprobar "typeMismatch" solo en email
         if(element.validity.typeMismatch == true) {
+            element.classList.add("fieldError");
             feedback.style.display = "block";
             feedback.innerHTML += "> " + message + "<br>";
         }
 
         // Comprobar "patternMismatch" para nombre, apellido y teléfono
         if(element.validity.patternMismatch == true) {
+            element.classList.add("fieldError");
             feedback.style.display = "block";
             feedback.innerHTML += "> " + message + "<br>";
         }
